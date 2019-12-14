@@ -2,6 +2,7 @@ package com.fund;
 
 import com.DataApplication;
 import com.dao.fund.FundInfoRepository;
+import com.entity.fund.FundInfo;
 import com.util.TxtUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,9 +34,18 @@ public class FundInfoTest {
         for(File file:new File(path).listFiles()){
             list.add(file.getAbsolutePath());
         }
-        path = list.get(0);
+        path = list.get(5);
+        System.out.println(path);
+        String topic ="指数型";
         for (String str:TxtUtil.readTxt(path)){
-            System.out.println(str);
+
+            String[] strArray = str.split("\t");
+            FundInfo fundInfo = new FundInfo();
+            fundInfo.setFundCode(strArray[1]);
+            fundInfo.setFundName(strArray[2]);
+            fundInfo.setFundTypeEm(topic);
+            fundInfoRepository.save(fundInfo);
+            System.out.println(strArray[0]+"\t"+fundInfo.toString());
         }
     }
 
