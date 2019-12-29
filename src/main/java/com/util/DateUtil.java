@@ -2,6 +2,8 @@ package com.util;
 
 //import org.junit.Test;
 
+import org.junit.Test;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,18 +35,24 @@ public class DateUtil {
         return lDate;
     }
 
-//    @Test
+    @Test
     public void testInfo() throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdf2 = new SimpleDateFormat("MM_dd");
-        Date begin = sdf.parse("2016-01-01");
+        Date begin = sdf.parse("2016-10-01");
         Date end = sdf.parse("2016-12-31");
         List<Date> list = findDates(begin, end);
+//        for (int i = 0; i <list.size() ; i++) {
+//            String column="t_"+sdf2.format(list.get(i));
+//            String info ="@Column(name = \""+column+"\")\n" +
+//                    "    private String "+column+";";
+//            System.out.println(info);
+//        }
         for (int i = 0; i <list.size() ; i++) {
             String column="t_"+sdf2.format(list.get(i));
-            String info ="@Column(name = \""+column+"\")\n" +
-                    "    private String "+column+";";
-            System.out.println(info);
+//            String info ="@Column(name = \""+column+"\")\n" +
+//                    "    private String "+column+";";
+            System.out.print(column+"\t");
         }
     }
 }

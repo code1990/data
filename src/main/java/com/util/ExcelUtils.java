@@ -4,6 +4,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
+import org.junit.Test;
 
 import java.io.*;
 import java.text.DecimalFormat;
@@ -16,6 +17,7 @@ import java.util.*;
  */
 public class ExcelUtils {
     DecimalFormat df = new DecimalFormat("#.00");
+    String path = "F:\\github\\data\\data\\week_data.xls";
     /*public static void main(String[] args) throws Exception {
         String srcPath = "C:\\Users\\admin\\Desktop\\bing\\keyword.xls";
         List<String> list = ExcelUtils.readXls(srcPath);
@@ -119,9 +121,9 @@ public class ExcelUtils {
         System.out.println(file.getName()+">>>excel写入ok!");
     }
 
-//    @Test
+    @Test
     public void testWeekInfo(){
-        String path = "F:\\github\\word\\week_data.xls";
+//        String path = "F:\\github\\word\\week_data.xls";
         List<String> list = readXls(path);
         Map<String,Double> codeValue = new HashMap<>();
         Map<String,String> codeName = new HashMap<>();
@@ -157,12 +159,39 @@ public class ExcelUtils {
 
     }
 
-//    @Test
+    @Test
     public void computeValue(){
-        String path = "F:\\github\\word\\week_data.xls";
+//        String path = "F:\\github\\word\\week_data.xls";
         List<String> list = readXls(path,5,20);
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i));
+        }
+    }
+
+    @Test
+    public void computeSize(){
+//        String path = "F:\\github\\word\\week_data.xls";
+        List<String> list = readXls(path);
+        Map<String,Integer> codeSize = new HashMap<>();
+        for (int i = 0; i <list.size() ; i++) {
+            String[] info = list.get(i).split(" ");
+            String fundCode = info[0];
+            if(null==codeSize.get(fundCode)){
+                codeSize.put(fundCode,1);
+            }else{
+                codeSize.put(fundCode,codeSize.get(fundCode)+1);
+            }
+        }
+        List<Map.Entry<String, Integer>> sortList = new ArrayList<Map.Entry<String, Integer>>(codeSize.entrySet());
+        //list.sort()
+        sortList.sort(new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+        for (int i = 0; i < sortList.size(); i++) {
+            System.out.println(sortList.get(i).getKey() + " "+codeSize.get(sortList.get(i).getKey()));
         }
     }
 }
